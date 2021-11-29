@@ -33,10 +33,10 @@ pipeline {
       stage('Deploy PROD') {
           steps {
               withKubeCredentials([credentialsId: 'kubeconfig']){
-                  //   customImage.push('latest')
-                  sh "kubectl apply -f https://raw.githubusercontent.com/cesarbgoncalves/Docker-Flask-uWSGI/master/k8s_app.yaml"
-                  sh "kubectl set image deployment app app=${imageName} --record"
-                  sh "kubectl rollout status deployment/app"
+              //   customImage.push('latest')
+              sh "kubectl apply -f https://raw.githubusercontent.com/cesarbgoncalves/Docker-Flask-uWSGI/master/k8s_app.yaml"
+              sh "kubectl set image deployment app app=${imageName} --record"
+              sh "kubectl rollout status deployment/app"
               }            
           }
       }
