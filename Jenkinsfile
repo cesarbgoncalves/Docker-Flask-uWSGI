@@ -5,16 +5,15 @@ pipeline {
       dockerImage = '' 
   }
   agent any 
-  stages { 
-    //   stage('Cloning our Git') { 
+  stages {
+      stage('Baixando kubeconfig') {
+          steps {
+              withKubeConfig([credentialsId: 'kubernetes-config']) {
+        sh 'curl -LO "https://storage.googleapis.com/kubernetes-release/release/v1.22.4/bin/linux/amd64/kubectl'
+        sh 'chmod u+x ./kubectl'
+          }
 
-    //       steps { 
-
-    //           git 'git@github.com:cesarbgoncalves/Docker-Flask-uWSGI.git' 
-
-    //       }
-
-    //   } 
+      } 
 
       stage('Building our image') { 
 
