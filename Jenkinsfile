@@ -2,7 +2,8 @@ pipeline {
   environment { 
       registry = "cesarbgoncalves/app" 
       registryCredential = 'dockerhub' 
-      dockerImage = '' 
+      dockerImage = ''
+      imageName = app
   }
   agent any 
   stages {
@@ -33,7 +34,7 @@ pipeline {
       stage('Deploy PROD') {
           steps {              
               sh "kubectl apply -f k8s_app.yaml --kubeconfig=/home/jenkins/.kube/config"
-              sh "kubectl set image deployment app app=${imageName} --record --kubeconfig=/home/jenkins/.kube/config"
+              sh "kubectl set image deployment app app=${imageName}:${BUILD_NUMBER} --record --kubeconfig=/home/jenkins/.kube/config"
             //   sh "kubectl -n app-python rollout status deployment/app"
                      
           }
