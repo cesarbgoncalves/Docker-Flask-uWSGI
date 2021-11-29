@@ -34,7 +34,7 @@ pipeline {
           steps {              
               sh "kubectl apply -f k8s_app.yaml --kubeconfig=/home/jenkins/.kube/config"
               sh "kubectl set image deployment app app=${imageName} --record"
-              sh "kubectl -n app-python rollout status deployment/app"
+            //   sh "kubectl -n app-python rollout status deployment/app"
                      
           }
       }
