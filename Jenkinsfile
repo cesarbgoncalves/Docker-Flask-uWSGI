@@ -33,7 +33,7 @@ pipeline {
       stage('Deploy PROD') {
           steps {              
               sh "kubectl apply -f k8s_app.yaml --kubeconfig=/home/jenkins/.kube/config"
-              sh "kubectl set image deployment app app=${imageName} --record"
+              sh "kubectl set image deployment app app=${imageName} --record --kubeconfig=/home/jenkins/.kube/config"
             //   sh "kubectl -n app-python rollout status deployment/app"
                      
           }

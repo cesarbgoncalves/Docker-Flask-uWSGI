@@ -35,7 +35,7 @@ spec:
     spec:
       containers:
         - name: app
-          image: cesarbgoncalves/app:latest
+          image: cesarbgoncalves/app:44
           imagePullPolicy: Always
           ports:
             - name: http
