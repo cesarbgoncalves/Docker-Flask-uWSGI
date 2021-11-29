@@ -11,12 +11,20 @@ node {
     registryHost = "cesarbgoncalves/"
     imageName = "${registryHost}${appName}:${tag}"
     
+    // Variaveis
+    environment {
+        DOCKERHUB_CREDENTIALS=credentials('docherhub')
+    }
     // Configuramos os estágios
     
     stage "Build"
 
         def customImage = docker.build("${imageName}")
-
+    
+    stage "Login"
+        sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin '
+        sh 'echo $DOCKERHUB_CREDENTIALS_PSW'
+        sh 'echo $DOCKERHUB_CREDENTIALS_USR'
     stage "Push"
 
         customImage.push()
