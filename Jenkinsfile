@@ -3,7 +3,7 @@ pipeline {
       registry = "cesarbgoncalves/app" 
       registryCredential = 'dockerhub' 
       dockerImage = ''
-      imageName = app
+      imageName = 'app'
   }
   agent any 
   stages {
