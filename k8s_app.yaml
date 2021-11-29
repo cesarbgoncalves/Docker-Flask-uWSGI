@@ -35,8 +35,30 @@ spec:
     spec:
       containers:
         - name: app
-          image: cesarbgoncalves/app:44
+          image: cesarbgoncalves/app
           imagePullPolicy: Always
           ports:
             - name: http
               containerPort: 5000
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: python-app
+  namespace: app-python
+  labels:
+    app: app
+  annotations:
+    kubernetes.io/ingress.class: "traefik"
+spec:
+  rules:
+  - host: "python-app.cesarbgoncalves.com.br"
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: app
+            port:
+              number: 5000
