@@ -8,12 +8,11 @@ pipeline {
   stages {
       stage('Baixando kubeconfig') {
           steps {
-              withKubeConfig([credentialsId: 'kubeconfig']) {
-                sh 'curl -LO "https://storage.googleapis.com/kubernetes-release/release/v1.22.4/bin/linux/amd64/kubectl'
-                sh 'chmod u+x ./kubectl'
-              }
+              sh 'curl -LO "https://storage.googleapis.com/kubernetes-release/release/v1.22.4/bin/linux/amd64/kubectl'
+              sh 'chmod u+x ./kubectl'
           }
-      } 
+      }
+   
       stage('Building our image') {
           steps {
               script {
@@ -31,19 +30,21 @@ pipeline {
               }
           }
       } 
-
+      stage('Deploy PROD') {
+          steps {
+              withKubeConfig([credentialsId: 'kubeconfig']){
+                  //   customImage.push('latest')
+                  sh "kubectl apply -f https://raw.githubusercontent.com/cesarbgoncalves/Docker-Flask-uWSGI/master/k8s_app.yaml"
+                  sh "kubectl set image deployment app app=${imageName} --record"
+                  sh "kubectl rollout status deployment/app"
+              }
+            
+          }
+      }
       stage('Cleaning up') {
           steps {
               sh "docker rmi $registry:$BUILD_NUMBER"
           }
       }
-      stage('Deploy PROD') {
-          steps {
-            //   customImage.push('latest')
-              sh "kubectl apply -f https://raw.githubusercontent.com/cesarbgoncalves/Docker-Flask-uWSGI/master/k8s_app.yaml"
-              sh "kubectl set image deployment app app=${imageName} --record"
-              sh "kubectl rollout status deployment/app"
-          }
-      } 
   }
 }
