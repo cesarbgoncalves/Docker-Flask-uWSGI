@@ -6,15 +6,15 @@ pipeline {
   }
   agent any 
   stages { 
-      stage('Cloning our Git') { 
+    //   stage('Cloning our Git') { 
 
-          steps { 
+    //       steps { 
 
-              git 'git@github.com:cesarbgoncalves/Docker-Flask-uWSGI.git' 
+    //           git 'git@github.com:cesarbgoncalves/Docker-Flask-uWSGI.git' 
 
-          }
+    //       }
 
-      } 
+    //   } 
 
       stage('Building our image') { 
 
