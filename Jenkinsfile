@@ -11,8 +11,8 @@ pipeline {
               withKubeConfig([credentialsId: 'kubernetes-config']) {
         sh 'curl -LO "https://storage.googleapis.com/kubernetes-release/release/v1.22.4/bin/linux/amd64/kubectl'
         sh 'chmod u+x ./kubectl'
-          }
-
+                }
+        }
       } 
 
       stage('Building our image') { 
