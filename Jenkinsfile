@@ -37,8 +37,7 @@ pipeline {
                   sh "kubectl apply -f https://raw.githubusercontent.com/cesarbgoncalves/Docker-Flask-uWSGI/master/k8s_app.yaml"
                   sh "kubectl set image deployment app app=${imageName} --record"
                   sh "kubectl rollout status deployment/app"
-              }
-            
+              }            
           }
       }
       stage('Cleaning up') {
