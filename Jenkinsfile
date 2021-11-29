@@ -35,7 +35,9 @@ pipeline {
               withKubeConfig([credentialsId: 'kubeconfig']){
               //   customImage.push('latest')
               sh "export  KUBECONFIG=/home/jenkins/.kube/config"
-              sh "kubectl apply -f https://raw.githubusercontent.com/cesarbgoncalves/Docker-Flask-uWSGI/master/k8s_app.yaml --kubeconfig=/home/jenkins/.kube/config"
+              sh "pwd"
+              sh "ls -ltrh"
+              sh "kubectl apply -f k8s_app.yaml --kubeconfig=/home/jenkins/.kube/config"
               sh "kubectl set image deployment app app=${imageName} --record"
               sh "kubectl rollout status deployment/app"
               }            

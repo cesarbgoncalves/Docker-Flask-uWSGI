@@ -32,7 +32,7 @@ spec:
     spec:
       containers:
         - name: app
-          image: "cesarbgoncalves/app:latest"
+          image: cesarbgoncalves/app
           imagePullPolicy: Always
           ports:
             - name: http
