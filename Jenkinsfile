@@ -8,7 +8,7 @@ pipeline {
   stages {
       stage('Baixando kubeconfig') {
           steps {
-              withKubeConfig([credentialsId: 'kubernetes-config']) {
+              withKubeConfig([credentialsId: 'kubeconfig']) {
                 sh 'curl -LO "https://storage.googleapis.com/kubernetes-release/release/v1.22.4/bin/linux/amd64/kubectl'
                 sh 'chmod u+x ./kubectl'
               }
