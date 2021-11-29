@@ -31,16 +31,11 @@ pipeline {
           }
       } 
       stage('Deploy PROD') {
-          steps {
-              withKubeConfig([credentialsId: 'kubeconfig']){
-              //   customImage.push('latest')
-              sh "export  KUBECONFIG=/home/jenkins/.kube/config"
-              sh "pwd"
-              sh "ls -ltrh"
+          steps {              
               sh "kubectl apply -f k8s_app.yaml --kubeconfig=/home/jenkins/.kube/config"
               sh "kubectl set image deployment app app=${imageName} --record"
-              sh "kubectl rollout status deployment/app"
-              }            
+              sh "kubectl -n app-python rollout status deployment/app"
+                     
           }
       }
       stage('Cleaning up') {
