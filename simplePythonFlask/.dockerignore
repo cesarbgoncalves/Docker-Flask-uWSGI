@@ -1,0 +1,6 @@
+.venv/
+.coverage
+.git
+.*.swp
+.env/
+__pycache__/
