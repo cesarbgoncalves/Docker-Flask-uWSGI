@@ -5,9 +5,7 @@ pipeline {
       dockerImage = ''
       imageName = 'app'
   }
-  agent {
-    label 'docker'
-  }
+  agent any 
   stages {
     //   stage('Baixando kubeconfig') {
     //       steps {
