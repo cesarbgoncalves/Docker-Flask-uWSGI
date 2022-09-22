@@ -1,11 +1,3 @@
-podTemplate {
-    node(POD_LABEL) {
-        stage('Run shell') {
-            sh 'echo hello world'
-        }
-    }
-}
-
 pipeline { 
   environment { 
       registry = "cesarbgoncalves/app" 
@@ -14,7 +6,7 @@ pipeline {
       imageName = 'app'
   }
   agent {
-    podeTemplate {
+    podTemplate {
         node(POD_LABEL) {
         }
     }
