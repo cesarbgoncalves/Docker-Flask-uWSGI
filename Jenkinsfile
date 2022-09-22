@@ -8,21 +8,15 @@ pipeline {
   agent {
     kubernetes {
         inheritFrom 'kube-agent'
-        yaml """
+        yaml '''
         spec:
           containers:
           - name: 'container-cesar'
-            image: cesarbgoncalves/inbound-agent:latest
-            """
+            image: jenkins/inbound-agent
+            '''
     }
   }
   stages {
-    //   stage('Baixando kubeconfig') {
-    //       steps {
-    //           sh 'curl -LO "https://storage.googleapis.com/kubernetes-release/release/v1.22.4/bin/linux/amd64/kubectl"'
-    //           sh 'chmod u+x ./kubectl'
-    //       }
-    //   }
    
       stage('Building our image') {
           steps {
