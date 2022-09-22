@@ -1,25 +1,18 @@
-pipeline { 
-  environment { 
-      registry = "cesarbgoncalves/app" 
-      registryCredential = 'dockerhub' 
-      dockerImage = ''
-      imageName = 'app'
-  }
-  agent {
-    podTemplate {
-        node(POD_LABEL) {
-        }
-    }
-  } 
-  stages {
-    //   stage('Baixando kubeconfig') {
-    //       steps {
-    //           sh 'curl -LO "https://storage.googleapis.com/kubernetes-release/release/v1.22.4/bin/linux/amd64/kubectl"'
-    //           sh 'chmod u+x ./kubectl'
-    //       }
-    //   }
-   
-      stage('Building our image') {
+environment { 
+    registry = "cesarbgoncalves/app" 
+    registryCredential = 'dockerhub' 
+    dockerImage = ''
+    imageName = 'app'
+}
+podTemplate(containers: [
+    containerTemplate(
+        name: 'jnlp', 
+        image: 'cesarbgoncalves/inbound-agent:latest'
+        )
+  ]) {
+
+    node(POD_LABEL) {
+        stage('Building our image') {
           steps {
               script {
                   dockerImage = docker.build registry + ":$BUILD_NUMBER"
