@@ -1,3 +1,11 @@
+podTemplate {
+    node(POD_LABEL) {
+        stage('Run shell') {
+            sh 'echo hello world'
+        }
+    }
+}
+
 pipeline { 
   environment { 
       registry = "cesarbgoncalves/app" 
@@ -5,7 +13,12 @@ pipeline {
       dockerImage = ''
       imageName = 'app'
   }
-  agent any 
+  agent {
+    podeTemplate {
+        node(POD_LABEL) {
+        }
+    }
+  } 
   stages {
     //   stage('Baixando kubeconfig') {
     //       steps {
