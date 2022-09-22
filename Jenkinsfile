@@ -5,17 +5,8 @@ pipeline {
       dockerImage = ''
       imageName = 'app'
   }
-  agent {
-    kubernetes {
-        inheritFrom 'kube-agent'
-        yaml '''
-        spec:
-          containers:
-          - name: 'container-cesar'
-            image: jenkins/inbound-agent
-            '''
-    }
-  }
+  agent any 
+
   stages {
    
       stage('Building our image') {
