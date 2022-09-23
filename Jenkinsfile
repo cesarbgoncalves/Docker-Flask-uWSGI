@@ -25,12 +25,20 @@ pipeline {
                   }
               }
           }
-      } 
+      }
+      stage('Baixando kubeconfig') {
+          steps {
+              sh 'curl -LO "https://storage.googleapis.com/kubernetes-release/release/v1.22.4/bin/linux/amd64/kubectl"'
+              sh 'chmod u+x ./kubectl'
+              sh 'mv ./kubectl /usr/bin/kubectl'
+          }
+      }
       stage('Deploy PROD') {
           steps {              
-              sh "kubectl apply -f k8s_app.yaml --kubeconfig=/home/jenkins/.kube/config"
-              sh "kubectl -n app-python set image deployment app app=cesarbgoncalves/app:${BUILD_NUMBER} --record --kubeconfig=/home/jenkins/.kube/config"
-              sh "kubectl -n app-python rollout status deployment/app"
+            
+              sh "/usr/bin/kubectl apply -f k8s_app.yaml --kubeconfig=/home/jenkins/.kube/config"
+              sh "/usr/bin/kubectl -n app-python set image deployment app app=cesarbgoncalves/app:${BUILD_NUMBER} --record --kubeconfig=/home/jenkins/.kube/config"
+              sh "/usr/bin/kubectl -n app-python rollout status deployment/app"
                      
           }
       }
