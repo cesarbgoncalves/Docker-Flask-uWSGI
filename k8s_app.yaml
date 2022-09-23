@@ -51,6 +51,10 @@ metadata:
   annotations:
     kubernetes.io/ingress.class: "traefik"
 spec:
+  tls:
+  - hosts:
+    - python-app.cesarbgoncalves.com.br
+    secretName: python-app
   rules:
   - host: "python-app.cesarbgoncalves.com.br"
     http:
